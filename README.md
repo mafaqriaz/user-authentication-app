@@ -184,7 +184,7 @@ App/
 1. **Clone the repository**
    ```bash
    git clone https://github.com/mafaqriaz/user-authentication-app.git
-   cd UserAuthenticationApp
+   cd user-authentication-app
    ```
 
 2. **Install dependencies**
