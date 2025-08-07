@@ -54,7 +54,7 @@ A React Native app with Login and Signup functionality using React Context API t
 
 8. **Bonus Features**
    - Password visibility toggle with emoji icons
-   - Form validation with real-time error clearing
+   - Form validation with error clearing on correct input
    - Confirmation dialogs for important actions
    - Session tracking with persistent count
    - Button-level loading states (no full-screen loaders)
@@ -91,8 +91,10 @@ Each component is organized in its own directory with the following structure:
 ComponentName/
 ├── index.tsx    # Main component logic
 ├── types.ts     # TypeScript interfaces and types
-└── styles.ts    # Component-specific styles
+└── styles.ts    # Component-specific styles (optional)
 ```
+
+**Note**: Login and Signup screens use inline styles with the design system, while Home screen uses separate styles.ts file.
 
 ### Benefits of This Architecture
 - **Separation of Concerns**: Logic, types, and styles are clearly separated
@@ -119,6 +121,13 @@ App/
 ├── context/             # React Context providers
 │   ├── AuthContext.tsx  # Authentication context and logic
 │   └── types.ts         # Context type definitions
+├── theme/               # Design system
+│   ├── colors.ts        # Color definitions and themes
+│   ├── typography.ts    # Typography scale and styles
+│   ├── spacing.ts       # Spacing and layout utilities
+│   ├── utils.ts         # Theme utility functions
+│   ├── ThemeContext.tsx # Theme context and provider
+│   └── index.ts         # Design system exports
 ├── navigation/          # Navigation configuration
 │   ├── AuthStack.tsx    # Authentication flow navigation
 │   ├── AppStack.tsx     # Authenticated app navigation
@@ -131,20 +140,22 @@ App/
 │   │   │   ├── hooks/
 │   │   │   │   └── useLogin.ts    # Login logic hook
 │   │   │   ├── index.tsx          # Login screen component
-│   │   │   ├── styles.ts          # Login screen styles
+│   │   │   ├── styles.ts          # Login screen styles (legacy)
 │   │   │   └── types.ts           # Screen type definitions
 │   │   └── Signup/
 │   │       ├── hooks/
 │   │       │   └── useSignup.ts   # Signup logic hook
 │   │       ├── index.tsx          # Signup screen component
-│   │       ├── styles.ts          # Signup screen styles
+│   │       ├── styles.ts          # Signup screen styles (legacy)
 │   │       └── types.ts           # Screen type definitions
 │   └── authenticated/   # Post-authentication screens
 │       └── Home/
 │           ├── hooks/
-│           │   └── useSessionCount.ts # Session tracking hook
-│           ├── index.tsx # Home screen component
-│           └── types.ts  # Screen type definitions
+│           │   ├── useHome.ts          # Home screen logic hook
+│           │   └── useSessionCount.ts  # Session tracking hook
+│           ├── index.tsx               # Home screen component
+│           ├── types.ts                # Screen type definitions
+│           └── styles.ts               # Home screen styles
 ├── utils/               # Utility functions
 └── index.tsx            # Main app component
 ```
@@ -248,20 +259,22 @@ The app uses AsyncStorage to persist user credentials locally. Users can:
 
 ### Form Validation
 
-- **Real-time validation**: Errors clear as user types
+- **On-submit validation**: Errors appear when Login/Signup button is pressed
+- **Progressive clearing**: Errors clear when user enters correct values
 - **Comprehensive checks**: Email format, password strength, required fields
 - **User-friendly messages**: Clear error descriptions
 
 ### Error Handling
 
 - **Network errors**: Graceful handling of connection issues
-- **Validation errors**: Real-time field validation with immediate feedback
+- **Validation errors**: Field validation on form submission with error clearing on correct input
 - **Authentication errors**: Clear visibility of login/signup failure messages
 - **General errors**: Fallback error messages for unexpected issues
 - **Visual feedback**: Enhanced error styling with distinct styling for different error types
 - **Glitch prevention**: Smooth error display without UI glitches
 - **Button-level loading**: No full-screen loaders, only button spinners
 - **Error persistence**: General errors remain visible until user interaction
+- **Progressive clearing**: Errors clear automatically when user enters correct values
 
 ### Security Features
 
@@ -286,31 +299,7 @@ The app uses AsyncStorage to persist user credentials locally. Users can:
 - `prettier` - Code formatting
 - `jest` - Testing framework
 
-## Future Enhancements
 
-Potential improvements that could be added:
-
-1. **Enhanced Security**
-   - JWT token implementation
-   - Biometric authentication
-   - OAuth integration (Google, Facebook)
-
-2. **User Experience**
-   - Forgot password functionality
-   - Email verification
-   - Profile editing
-   - Enhanced dark mode support (already implemented)
-   - Session analytics and insights
-
-3. **Data Management**
-   - API integration
-   - Offline support
-   - Data synchronization
-
-4. **Testing**
-   - Unit tests for components
-   - Integration tests for auth flow
-   - End-to-end testing
 
 ## Contributing
 
