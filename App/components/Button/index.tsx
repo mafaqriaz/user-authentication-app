@@ -53,6 +53,7 @@ const Button: React.FC<ButtonProps> = ({
       {loading ? (
         // Show loading spinner when loading state is true
         <ActivityIndicator
+          testID="activity-indicator"
           color={disabled 
             ? theme.semantic.button[variant].disabled.text 
             : theme.semantic.button[variant].text}

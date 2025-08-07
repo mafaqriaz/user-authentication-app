@@ -173,7 +173,7 @@ App/
 
 1. **Clone the repository**
    ```bash
-   git clone <repository-url>
+   git clone https://github.com/mafaqriaz/user-authentication-app.git
    cd UserAuthenticationApp
    ```
 
@@ -266,7 +266,6 @@ The app uses AsyncStorage to persist user credentials locally. Users can:
 
 ### Error Handling
 
-- **Network errors**: Graceful handling of connection issues
 - **Validation errors**: Field validation on form submission with error clearing on correct input
 - **Authentication errors**: Clear visibility of login/signup failure messages
 - **General errors**: Fallback error messages for unexpected issues
@@ -311,4 +310,4 @@ The app uses AsyncStorage to persist user credentials locally. Users can:
 
 ## License
 
-This project is for educational purposes and demonstration of React Native authentication patterns.
+This project is for educational demonstration of React Native authentication patterns.
