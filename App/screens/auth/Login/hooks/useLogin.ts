@@ -76,22 +76,40 @@ const useLogin = () => {
    */
   const handleEmailChange = useCallback((newEmail: string) => {
     setEmail(newEmail);
+    
     // Clear general error when user changes email
     if (errors.general) {
       setErrors(prev => ({ ...prev, general: undefined }));
     }
-  }, [errors.general]);
+    
+    // Validate and clear email error if valid
+    if (errors.email) {
+      const emailError = validateEmail(newEmail);
+      if (!emailError) {
+        setErrors(prev => ({ ...prev, email: undefined }));
+      }
+    }
+  }, [errors.general, errors.email]);
 
   /**
    * Handle password change with error clearing
    */
   const handlePasswordChange = useCallback((newPassword: string) => {
     setPassword(newPassword);
+    
     // Clear general error when user changes password
     if (errors.general) {
       setErrors(prev => ({ ...prev, general: undefined }));
     }
-  }, [errors.general]);
+    
+    // Validate and clear password error if valid
+    if (errors.password) {
+      const passwordError = validatePassword(newPassword);
+      if (!passwordError) {
+        setErrors(prev => ({ ...prev, password: undefined }));
+      }
+    }
+  }, [errors.general, errors.password]);
 
   /**
    * Handle login form submission

@@ -116,44 +116,88 @@ const useSignup = () => {
    */
   const handleNameChange = useCallback((newName: string) => {
     setName(newName);
+    
     // Clear general error when user changes name
     if (errors.general) {
       setErrors(prev => ({ ...prev, general: undefined }));
     }
-  }, [errors.general]);
+    
+    // Validate and clear name error if valid
+    if (errors.name) {
+      const nameError = validateName(newName);
+      if (!nameError) {
+        setErrors(prev => ({ ...prev, name: undefined }));
+      }
+    }
+  }, [errors.general, errors.name]);
 
   /**
    * Handle email change with error clearing
    */
   const handleEmailChange = useCallback((newEmail: string) => {
     setEmail(newEmail);
+    
     // Clear general error when user changes email
     if (errors.general) {
       setErrors(prev => ({ ...prev, general: undefined }));
     }
-  }, [errors.general]);
+    
+    // Validate and clear email error if valid
+    if (errors.email) {
+      const emailError = validateEmail(newEmail);
+      if (!emailError) {
+        setErrors(prev => ({ ...prev, email: undefined }));
+      }
+    }
+  }, [errors.general, errors.email]);
 
   /**
    * Handle password change with error clearing
    */
   const handlePasswordChange = useCallback((newPassword: string) => {
     setPassword(newPassword);
+    
     // Clear general error when user changes password
     if (errors.general) {
       setErrors(prev => ({ ...prev, general: undefined }));
     }
-  }, [errors.general]);
+    
+    // Validate and clear password error if valid
+    if (errors.password) {
+      const passwordError = validatePassword(newPassword);
+      if (!passwordError) {
+        setErrors(prev => ({ ...prev, password: undefined }));
+      }
+    }
+    
+    // Re-validate confirm password if it exists
+    if (confirmPassword && errors.confirmPassword) {
+      const confirmPasswordError = validateConfirmPassword(confirmPassword);
+      if (!confirmPasswordError) {
+        setErrors(prev => ({ ...prev, confirmPassword: undefined }));
+      }
+    }
+  }, [errors.general, errors.password, errors.confirmPassword, confirmPassword]);
 
   /**
    * Handle confirm password change with error clearing
    */
   const handleConfirmPasswordChange = useCallback((newConfirmPassword: string) => {
     setConfirmPassword(newConfirmPassword);
+    
     // Clear general error when user changes confirm password
     if (errors.general) {
       setErrors(prev => ({ ...prev, general: undefined }));
     }
-  }, [errors.general]);
+    
+    // Validate and clear confirm password error if valid
+    if (errors.confirmPassword) {
+      const confirmPasswordError = validateConfirmPassword(newConfirmPassword);
+      if (!confirmPasswordError) {
+        setErrors(prev => ({ ...prev, confirmPassword: undefined }));
+      }
+    }
+  }, [errors.general, errors.confirmPassword]);
 
   /**
    * Handle signup form submission
