@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import {
   View,
   Text,
@@ -43,54 +43,9 @@ const Signup: React.FC = () => {
     confirmPassword,
     setConfirmPassword,
     errors,
-    setErrors,
     isSubmitting,
     handleSignup,
   } = useSignup();
-
-  // Clear name error when user enters correct name length
-  useEffect(() => {
-    if (errors.name && name && name.trim().length >= 2) {
-      setErrors(prev => ({ 
-        ...prev, 
-        name: undefined 
-      }));
-    }
-  }, [name, errors.name, setErrors]);
-
-  // Clear email error when user enters correct email format
-  useEffect(() => {
-    if (errors.email && email && email.trim()) {
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (emailRegex.test(email)) {
-        setErrors(prev => ({ 
-          ...prev, 
-          email: undefined 
-        }));
-      }
-    }
-  }, [email, errors.email, setErrors]);
-
-  // Clear password error when user enters correct password length
-  useEffect(() => {
-    if (errors.password && password && password.length >= 6) {
-      setErrors(prev => ({ 
-        ...prev, 
-        password: undefined 
-      }));
-    }
-  }, [password, errors.password, setErrors]);
-
-  // Clear confirm password error when passwords match
-  useEffect(() => {
-    if (errors.confirmPassword && confirmPassword && password === confirmPassword) {
-      setErrors(prev => ({ 
-        ...prev, 
-        confirmPassword: undefined 
-      }));
-    }
-  }, [confirmPassword, password, errors.confirmPassword, setErrors]);
-
 
   /**
    * Navigate to the login screen

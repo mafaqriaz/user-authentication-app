@@ -60,25 +60,38 @@ const useLogin = () => {
       newErrors.password = passwordError;
     }
 
-    // Preserve general errors during validation
-    if (errors.general) {
-      newErrors.general = errors.general;
-    }
-
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
   /**
-   * Clear only field-specific errors while preserving general errors
+   * Clear all errors when user starts typing
    */
-  const clearFieldErrors = useCallback(() => {
-    setErrors(prev => ({
-      general: prev.general, // Preserve general errors
-      email: undefined,
-      password: undefined,
-    }));
+  const clearErrors = useCallback(() => {
+    setErrors({});
   }, []);
+
+  /**
+   * Handle email change with error clearing
+   */
+  const handleEmailChange = useCallback((newEmail: string) => {
+    setEmail(newEmail);
+    // Clear general error when user changes email
+    if (errors.general) {
+      setErrors(prev => ({ ...prev, general: undefined }));
+    }
+  }, [errors.general]);
+
+  /**
+   * Handle password change with error clearing
+   */
+  const handlePasswordChange = useCallback((newPassword: string) => {
+    setPassword(newPassword);
+    // Clear general error when user changes password
+    if (errors.general) {
+      setErrors(prev => ({ ...prev, general: undefined }));
+    }
+  }, [errors.general]);
 
   /**
    * Handle login form submission
@@ -95,15 +108,15 @@ const useLogin = () => {
     }
 
     setIsSubmitting(true);
-    // Clear only field errors, preserve general errors
-    clearFieldErrors();
+    // Clear all errors before attempting login
+    setErrors({});
 
     try {
       // Attempt to authenticate user
       const result = await login(email.trim(), password);
       
       if (!result.success) {
-        setErrors({ general: result.error || 'Login failed' });
+        setErrors({ general: result.error || 'Invalid email or password' });
       }
     } catch (error) {
       setErrors({ general: 'An unexpected error occurred' });
@@ -112,15 +125,11 @@ const useLogin = () => {
     }
   };
 
-  const clearErrors = useCallback(() => {
-    setErrors({});
-  }, []);
-
   return {
     email,
-    setEmail,
+    setEmail: handleEmailChange,
     password,
-    setPassword,
+    setPassword: handlePasswordChange,
     errors,
     setErrors,
     isSubmitting,

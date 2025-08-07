@@ -100,27 +100,60 @@ const useSignup = () => {
       newErrors.confirmPassword = confirmPasswordError;
     }
 
-    // Preserve general errors during validation
-    if (errors.general) {
-      newErrors.general = errors.general;
-    }
-
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
   /**
-   * Clear only field-specific errors while preserving general errors
+   * Clear all errors when user starts typing
    */
-  const clearFieldErrors = useCallback(() => {
-    setErrors(prev => ({
-      general: prev.general, // Preserve general errors
-      name: undefined,
-      email: undefined,
-      password: undefined,
-      confirmPassword: undefined,
-    }));
+  const clearErrors = useCallback(() => {
+    setErrors({});
   }, []);
+
+  /**
+   * Handle name change with error clearing
+   */
+  const handleNameChange = useCallback((newName: string) => {
+    setName(newName);
+    // Clear general error when user changes name
+    if (errors.general) {
+      setErrors(prev => ({ ...prev, general: undefined }));
+    }
+  }, [errors.general]);
+
+  /**
+   * Handle email change with error clearing
+   */
+  const handleEmailChange = useCallback((newEmail: string) => {
+    setEmail(newEmail);
+    // Clear general error when user changes email
+    if (errors.general) {
+      setErrors(prev => ({ ...prev, general: undefined }));
+    }
+  }, [errors.general]);
+
+  /**
+   * Handle password change with error clearing
+   */
+  const handlePasswordChange = useCallback((newPassword: string) => {
+    setPassword(newPassword);
+    // Clear general error when user changes password
+    if (errors.general) {
+      setErrors(prev => ({ ...prev, general: undefined }));
+    }
+  }, [errors.general]);
+
+  /**
+   * Handle confirm password change with error clearing
+   */
+  const handleConfirmPasswordChange = useCallback((newConfirmPassword: string) => {
+    setConfirmPassword(newConfirmPassword);
+    // Clear general error when user changes confirm password
+    if (errors.general) {
+      setErrors(prev => ({ ...prev, general: undefined }));
+    }
+  }, [errors.general]);
 
   /**
    * Handle signup form submission
@@ -137,8 +170,8 @@ const useSignup = () => {
     }
 
     setIsSubmitting(true);
-    // Clear only field errors, preserve general errors
-    clearFieldErrors();
+    // Clear all errors before attempting signup
+    setErrors({});
 
     try {
       // Attempt to register new user
@@ -154,19 +187,15 @@ const useSignup = () => {
     }
   };
 
-  const clearErrors = useCallback(() => {
-    setErrors({});
-  }, []);
-
   return {
     name,
-    setName,
+    setName: handleNameChange,
     email,
-    setEmail,
+    setEmail: handleEmailChange,
     password,
-    setPassword,
+    setPassword: handlePasswordChange,
     confirmPassword,
-    setConfirmPassword,
+    setConfirmPassword: handleConfirmPasswordChange,
     errors,
     setErrors,
     isSubmitting,

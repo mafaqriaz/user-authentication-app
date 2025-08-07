@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import {
   View,
   Text,
@@ -39,34 +39,9 @@ const Login: React.FC = () => {
     password,
     setPassword,
     errors,
-    setErrors,
     isSubmitting,
     handleLogin,
   } = useLogin();
-
-  // Clear email error when user enters correct email format
-  useEffect(() => {
-    if (errors.email && email && email.trim()) {
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (emailRegex.test(email)) {
-        setErrors(prev => ({ 
-          ...prev, 
-          email: undefined 
-        }));
-      }
-    }
-  }, [email, errors.email, setErrors]);
-
-  // Clear password error when user enters any password
-  useEffect(() => {
-    if (errors.password && password && password.trim()) {
-      setErrors(prev => ({ 
-        ...prev, 
-        password: undefined 
-      }));
-    }
-  }, [password, errors.password, setErrors]);
-
 
   /**
    * Navigate to the signup screen
