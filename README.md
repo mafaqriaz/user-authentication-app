@@ -70,6 +70,14 @@ A React Native app with Login and Signup functionality using React Context API t
    - Dark mode visibility fixes for all components
    - Consistent input field sizing across the app
 
+10. **Testing**
+    - Comprehensive test suite with 39 passing tests
+    - Validation utility tests (17 tests)
+    - Component tests for Button and Input (11 tests)
+    - Hook tests for session management (5 tests)
+    - Theme context tests (6 tests)
+    - Jest configuration with React Native support
+
 ## Tech Stack
 
 - **React Native** 0.80.2
@@ -80,6 +88,7 @@ A React Native app with Login and Signup functionality using React Context API t
 - **AsyncStorage** - Data persistence
 - **React Native Gesture Handler** - Enhanced gesture support
 - **Design System** - Custom theme system with light/dark mode
+- **Jest & React Native Testing Library** - Testing framework
 
 ## Component Architecture
 
@@ -91,10 +100,10 @@ Each component is organized in its own directory with the following structure:
 ComponentName/
 ├── index.tsx    # Main component logic
 ├── types.ts     # TypeScript interfaces and types
-└── styles.ts    # Component-specific styles (optional)
+└── styles.ts    # Component-specific styles
 ```
 
-**Note**: Login and Signup screens use inline styles with the design system, while Home screen uses separate styles.ts file.
+**Note**: All components (Button, Input, Login, Signup, Home) use the modular structure with separate files.
 
 ### Benefits of This Architecture
 - **Separation of Concerns**: Logic, types, and styles are clearly separated
@@ -140,13 +149,13 @@ App/
 │   │   │   ├── hooks/
 │   │   │   │   └── useLogin.ts    # Login logic hook
 │   │   │   ├── index.tsx          # Login screen component
-│   │   │   ├── styles.ts          # Login screen styles (legacy)
+│   │   │   ├── styles.ts          # Login screen styles
 │   │   │   └── types.ts           # Screen type definitions
 │   │   └── Signup/
 │   │       ├── hooks/
 │   │       │   └── useSignup.ts   # Signup logic hook
 │   │       ├── index.tsx          # Signup screen component
-│   │       ├── styles.ts          # Signup screen styles (legacy)
+│   │       ├── styles.ts          # Signup screen styles
 │   │       └── types.ts           # Screen type definitions
 │   └── authenticated/   # Post-authentication screens
 │       └── Home/
@@ -157,6 +166,7 @@ App/
 │           ├── types.ts                # Screen type definitions
 │           └── styles.ts               # Home screen styles
 ├── utils/               # Utility functions
+│   └── validation.ts    # Form validation utilities
 └── index.tsx            # Main app component
 ```
 
@@ -282,6 +292,28 @@ The app uses AsyncStorage to persist user credentials locally. Users can:
 - **Session management**: Automatic logout capabilities
 - **Session tracking**: Secure session count persistence
 
+## Testing
+
+The app includes a comprehensive test suite with 39 passing tests:
+
+### Test Categories
+- **Validation Tests** (17 tests): Email, password, name validation with edge cases
+- **Component Tests** (11 tests): Button and Input component rendering and interactions
+- **Hook Tests** (5 tests): Session management and AsyncStorage integration
+- **Theme Tests** (6 tests): Theme switching and color management
+
+### Running Tests
+```bash
+# Run all tests
+yarn test
+
+# Run specific test categories
+yarn test __tests__/utils/validation.test.ts
+yarn test __tests__/components/
+yarn test __tests__/hooks/
+yarn test __tests__/theme/
+```
+
 ## Dependencies
 
 ### Production Dependencies
@@ -291,14 +323,14 @@ The app uses AsyncStorage to persist user credentials locally. Users can:
 - `react-native-gesture-handler` - Gesture handling
 - `react-native-safe-area-context` - Safe area handling
 - `react-native-screens` - Native screen components
+- `react-native-vector-icons` - Icon library
 
 ### Development Dependencies
 - `@types/*` - TypeScript type definitions
+- `@testing-library/react-native` - React Native testing utilities
 - `eslint` - Code linting
 - `prettier` - Code formatting
 - `jest` - Testing framework
-
-
 
 ## Contributing
 
